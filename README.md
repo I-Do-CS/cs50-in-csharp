@@ -1,2 +1,2 @@
-# cs50-in-csharp
+# CS50 In C#
 CS50 assignments done in C#.
