@@ -19,80 +19,80 @@ namespace Scrabble
             Player[] players = GetPlayers();
             int round = 0;
             
-            // Handle ctrl + c 
-            Console.CancelKeyPress += delegate
-            {
-                Console.WriteLine(
-                    "\n\n====================" +
-                    "\n     GAME OVER      " +
-                    "\n====================\n" 
-                );
-
-                // Remove last round inputs if game exited mid-round
-                int[] playersRounds = new int[players.Length];
-                for ( int i = 0; i < players.Length; i++ )
-                {
-                    playersRounds[i] = players[i].WordsPlayed.Count;
-                }
-
-                round = playersRounds.Min();
-                foreach ( Player player in players )
-                {
-                    if (player.WordsPlayed.Count > round )
-                    {
-                        player.WordsPlayed.RemoveAt( player.WordsPlayed.Count - 1);
-                    }
-                }
-
-                // Find and declare the Winner(s)
-                int[] playerWins = new int[players.Length]; 
-                for( int i = 0;i < players.Length; i++ )
-                {
-                    playerWins[i] = players[i].Wins;
-                }
-
-                int winnerScore = playerWins.Max();
-                int winnersCount = 0;
-                foreach ( Player player in players )
-                {
-                    Console.WriteLine($"{player.Name}: {player.Wins} Wins");
-                    if (player.Wins ==  winnerScore)
-                    {
-                        winnersCount++;
-                    }
-                }
-
-                if ( winnersCount > 1 )
-                {
-                    Console.WriteLine();
-                    foreach ( Player player in players )
-                    {
-                        if (player.Wins == winnerScore)
-                        {
-                            Console.Write($"{player.Name}, ");
-                        }
-                    }
-                    Console.Write("Tied The Game! Good Job!\n");
-                }
-                else
-                {
-                    foreach( Player player in players )
-                    {
-                        if (player.Wins == winnerScore)
-                        {
-                            Console.WriteLine($"\n{player.Name} is the WINNER!!! Good Job!\n");
-                            break;
-                        }
-                    }
-                }
-                return;
-            };
-            
             while (true)
             {
 
                 PlayRound(players, round + 1);
                 round++;
+
+                // Handle ctrl + c 
+                Console.CancelKeyPress += delegate
+                {
+                    Console.WriteLine(
+                        "\n\n====================" +
+                        "\n     GAME OVER      " +
+                        "\n====================\n"
+                    );
+
+                    // Remove last round inputs if game exited mid-round
+                    int[] playersRounds = new int[players.Length];
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        playersRounds[i] = players[i].WordsPlayed.Count;
+                    }
+
+                    round = playersRounds.Min();
+                    foreach (Player player in players)
+                    {
+                        if (player.WordsPlayed.Count > round)
+                        {
+                            player.WordsPlayed.RemoveAt(player.WordsPlayed.Count - 1);
+                        }
+                    }
+
+                    // Find and declare the Winner(s)
+                    int[] playerWins = new int[players.Length];
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        playerWins[i] = players[i].Wins;
+                    }
+
+                    int winnerScore = playerWins.Max();
+                    int winnersCount = 0;
+                    foreach (Player player in players)
+                    {
+                        Console.WriteLine($"{player.Name}: {player.Wins} Wins");
+                        if (player.Wins == winnerScore)
+                        {
+                            winnersCount++;
+                        }
+                    }
+
+                    if (winnersCount > 1)
+                    {
+                        Console.WriteLine();
+                        foreach (Player player in players)
+                        {
+                            if (player.Wins == winnerScore)
+                            {
+                                Console.Write($"{player.Name}, ");
+                            }
+                        }
+                        Console.Write("Tied The Game! Good Job!\n");
+                    }
+                    else
+                    {
+                        foreach (Player player in players)
+                        {
+                            if (player.Wins == winnerScore)
+                            {
+                                Console.WriteLine($"\n{player.Name} is the WINNER!!! Good Job!\n");
+                                break;
+                            }
+                        }
+                    }
+                    return;
+                };
             }
         }
 
